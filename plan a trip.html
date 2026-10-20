@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100d1c">
+<title>PLAN A TRIP — Find your next adventure</title>
+<style>
+  :root{--ink:#f8f5ff;--muted:#b8b1c9;--violet:#a78bfa;--pink:#fb7185;--panel:rgba(19,16,33,.78);--line:rgba(255,255,255,.14)}
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:#100d1c;overflow-x:hidden}
+  /* Anime-inspired energy field; replace the artwork layer with your licensed JJK image if desired. */
+  .backdrop{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 75% 34%,rgba(113,61,181,.26),transparent 37%),radial-gradient(ellipse at 18% 80%,rgba(208,47,105,.18),transparent 30%),linear-gradient(112deg,#100d1c 5%,#1b1028 52%,#100d1c 100%)}
+  .backdrop:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,10,22,.94) 2%,rgba(13,10,22,.73) 53%,rgba(13,10,22,.35)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 700'%3E%3Cpath d='M620 700 590 402q-12-94 57-150l62-50 43 46-48 81 102 371z' fill='%23130f20' stroke='%23b89aff' stroke-opacity='.3' stroke-width='3'/%3E%3Cpath d='m646 317 96-107 48 28-62 95 35 80-77 29-64-69z' fill='%23251a36' stroke='%23fb7185' stroke-opacity='.35' stroke-width='3'/%3E%3Ccircle cx='715' cy='171' r='92' fill='%23291b3e' stroke='%23c4b5fd' stroke-opacity='.28' stroke-width='3'/%3E%3Cpath d='M628 155q80-82 165-10M653 228q57 34 117-5' fill='none' stroke='%23fb7185' stroke-opacity='.38' stroke-width='7'/%3E%3Cpath d='M80 560 250 190l48 74-92 296 75-95 29 30-132 171z' fill='%23a78bfa' fill-opacity='.08'/%3E%3C/svg%3E") center/cover no-repeat;opacity:.96}
+  .backdrop:after{content:"";position:absolute;inset:0;background-image:radial-gradient(#fff 0.65px,transparent .65px);background-size:36px 36px;opacity:.12;mask-image:linear-gradient(90deg,transparent,black)}
+  header{height:82px;max-width:1240px;margin:auto;padding:0 30px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.09)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:850;letter-spacing:.12em;font-size:15px}.brand-mark{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--violet),var(--pink));font-size:18px;box-shadow:0 0 28px #a78bfa55}
+  nav{display:flex;gap:26px;align-items:center} nav a{color:#d8d2e4;text-decoration:none;font-size:13px}nav a:hover{color:white}.nav-cta{border:1px solid var(--line);padding:10px 16px;border-radius:99px}
+  main{max-width:1240px;margin:auto;padding:76px 30px 70px;display:grid;grid-template-columns:1.05fr .8fr;gap:68px;align-items:center;min-height:calc(100vh - 82px)}
+  .eyebrow{color:#d1b8ff;text-transform:uppercase;letter-spacing:.22em;font-size:11px;font-weight:750;display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";width:25px;height:1px;background:var(--pink)}
+  h1{font-size:clamp(50px,7vw,88px);line-height:.98;letter-spacing:-.065em;margin:22px 0 21px;max-width:680px}h1 span{color:#c4b5fd;text-shadow:0 0 38px #a78bfa55}
+  .intro{max-width:520px;color:#cbc5d6;font-size:16px;line-height:1.75;margin:0 0 30px}.highlights{display:flex;gap:26px;flex-wrap:wrap}.highlight{display:flex;gap:10px;align-items:center;color:#e8e2f1;font-size:12px}.icon{width:34px;height:34px;border-radius:11px;background:#ffffff0d;border:1px solid #ffffff16;display:grid;place-items:center;color:#d2bfff;font-size:16px}
+  .quote{margin-top:62px;padding-left:15px;border-left:2px solid #fb7185aa;color:#b8b1c9;font-size:12px;line-height:1.6}.quote strong{display:block;color:#eee8f5;font-weight:600;margin-top:5px}
+  .card{background:var(--panel);border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:30px;backdrop-filter:blur(20px);box-shadow:0 24px 100px #0007,0 0 60px #9b62d018;max-width:480px;width:100%;justify-self:end}
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}.card h2{margin:0 0 7px;font-size:24px;letter-spacing:-.04em}.card-head p{margin:0;color:var(--muted);font-size:12px}.step{border:1px solid #ffffff20;border-radius:99px;padding:7px 10px;color:#d5c4ff;font-size:10px;white-space:nowrap}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#09071188;border-radius:12px;margin-bottom:21px}.tabs button{border:0;background:transparent;color:#aaa2b9;padding:10px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:700}.tabs button.active{color:white;background:#ffffff13;box-shadow:0 2px 10px #0003}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label{font-size:11px;color:#d6d0df;font-weight:650}input,textarea{width:100%;background:#0c0a14a8;color:white;border:1px solid #ffffff19;border-radius:10px;padding:12px 13px;font:inherit;font-size:12px;outline:none;transition:.2s}input::placeholder,textarea::placeholder{color:#756e80}input:focus,textarea:focus{border-color:#b79bff;box-shadow:0 0 0 3px #a78bfa20}textarea{resize:vertical;min-height:68px}
+  .captcha-row{display:flex;gap:9px}.captcha-code{min-width:102px;display:grid;place-items:center;border-radius:10px;border:1px dashed #bba4fc77;background:repeating-linear-gradient(135deg,#8c65d11a 0 7px,#fb71850a 7px 14px);font-family:Georgia,serif;font-style:italic;font-weight:bold;letter-spacing:.2em;color:#e7d9ff;text-decoration:line-through;text-decoration-color:#fb7185aa;user-select:none}.refresh{width:42px;padding:0;cursor:pointer;font-size:16px}.captcha-row input{flex:1;min-width:0}
+  .submit{margin-top:17px;width:100%;border:0;border-radius:11px;padding:14px;color:#fff;font-weight:800;font-size:13px;letter-spacing:.02em;cursor:pointer;background:linear-gradient(105deg,#8b5cf6,#c05bba 55%,#ef667f);box-shadow:0 10px 28px #a454cf3d;transition:transform .2s,filter .2s}.submit:hover{transform:translateY(-2px);filter:brightness(1.1)}.privacy{margin:12px 0 0;color:#92899e;font-size:10px;line-height:1.5;text-align:center}.notice{display:none;margin-top:12px;border-radius:9px;padding:10px 12px;font-size:11px}.notice.show{display:block}.notice.ok{background:#2dd4a01a;color:#8bf1ce}.notice.err{background:#fb71851a;color:#ffb2bd}
+  .planner{width:min(100%,760px);max-width:760px;justify-self:end}.card:has(.planner:not([hidden])){width:min(100%,800px);max-width:800px}.planner-intro{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 20px}.planner-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.planner-grid input,.planner-grid select{width:100%;background:#0c0a14a8;color:white;border:1px solid #ffffff19;border-radius:10px;padding:12px 13px;font:inherit;font-size:12px}.planner-grid select option{background:#171324}.itinerary{margin-top:22px}.day-plan{padding:16px;margin-top:12px;border:1px solid #ffffff18;border-radius:13px;background:#ffffff08}.day-plan h3{margin:0 0 10px;color:#d9c7ff;font-size:14px}.day-plan ul{margin:0;padding-left:18px;color:#ded8e7;font-size:12px;line-height:1.8}.plan-note{margin-top:14px;color:#a59bb2;font-size:10px;line-height:1.6}.planner[hidden],#login-screen[hidden]{display:none}
+  .guide-grid,.transport-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+  .guide-card,.transport-card{padding:12px;border:1px solid #ffffff18;border-radius:12px;background:#09081788}
+  .guide-card h4,.transport-card h4{margin:0 0 6px;font-size:12px}
+  .guide-card p,.transport-card p{margin:0 0 8px;color:var(--muted);font-size:10px;line-height:1.55}
+  .guide-links{display:flex;gap:10px;flex-wrap:wrap}
+  .guide-links a,.transport-card>a{color:#7ce9f2;font-size:10px;text-decoration:none}
+  .guide-links a:hover,.transport-card>a:hover{text-decoration:underline}
+  .transport-icon{display:inline-grid;width:28px;height:28px;margin-bottom:8px;place-items:center;border-radius:8px;color:#7ce9f2;background:#7ce9f21a}  .content-section{max-width:1180px;margin:0 auto;padding:70px 30px}.section-kicker{color:#d1b8ff;text-transform:uppercase;letter-spacing:.2em;font-size:10px;font-weight:800}.section-title{font-size:clamp(30px,4vw,46px);letter-spacing:-.05em;margin:12px 0;color:#fff}.section-copy{max-width:560px;color:#bcb4ca;line-height:1.7;font-size:14px}.destination-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}.destination-card{min-height:205px;border-radius:18px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid #ffffff20;overflow:hidden;position:relative;background:linear-gradient(155deg,#9262c855,#17101fe8 75%)}.destination-card:nth-child(2){background:linear-gradient(155deg,#d86c6480,#17101fe8 75%)}.destination-card:nth-child(3){background:linear-gradient(155deg,#519d9680,#17101fe8 75%)}.destination-card:before{content:"✦";position:absolute;right:18px;top:12px;font-size:82px;color:#ffffff17}.destination-card h3{font-size:22px;margin:0 0 5px}.destination-card p{font-size:12px;color:#d1c9dc;margin:0;line-height:1.5}.destination-card a{color:#e3d6ff;text-decoration:none;font-size:12px;margin-top:12px}.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}.step-card{padding:20px;border:1px solid #ffffff18;border-radius:16px;background:#ffffff08}.step-number{color:#e3b5ff;font-size:12px;font-weight:800}.step-card h3{font-size:16px;margin:10px 0 7px}.step-card p{color:#aaa2b9;font-size:12px;line-height:1.6;margin:0}.bottom-cta{margin:12px auto 60px;max-width:1120px;padding:32px;border:1px solid #ffffff20;border-radius:20px;background:linear-gradient(105deg,#6d45a944,#ba557733);display:flex;justify-content:space-between;gap:20px;align-items:center}.bottom-cta h2{margin:0 0 7px;font-size:24px}.bottom-cta p{margin:0;color:#c9c1d3;font-size:13px}.bottom-cta a{white-space:nowrap;color:white;text-decoration:none;font-size:13px;font-weight:bold;padding:13px 18px;border-radius:999px;background:linear-gradient(100deg,#8b5cf6,#d25f9c)}
+  footer{max-width:1240px;margin:-36px auto 0;padding:0 30px 20px;color:#81798d;font-size:10px;display:flex;justify-content:space-between;position:relative}
+  @media(max-width:850px){main{grid-template-columns:1fr;gap:45px;padding-top:55px}.copy{max-width:650px}.card{justify-self:start;max-width:600px}.planner{justify-self:start;max-width:760px}.quote{margin-top:35px}.backdrop:before{background-position:62% center}.content-section{padding:55px 24px}.bottom-cta{margin:12px 24px 45px}.destination-grid,.steps-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){header{height:68px;padding:0 19px}nav{gap:14px}nav a:not(.nav-cta){display:none}main{padding:42px 19px 60px;min-height:auto}h1{font-size:54px}.intro{font-size:14px}.card{padding:22px 17px;border-radius:19px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.captcha-row{gap:7px}.captcha-code{min-width:78px}.content-section{padding:45px 19px}.destination-grid,.steps-grid,.guide-grid,.transport-grid{grid-template-columns:1fr}.destination-card{min-height:170px}.bottom-cta{margin:5px 19px 35px;padding:24px;align-items:flex-start;flex-direction:column}.planner-grid{grid-template-columns:1fr}footer{margin:0;padding:0 19px 18px;gap:14px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"></div>
+<header>
+  <a class="brand" href="#top"><span class="brand-mark">✦</span> PLAN A TRIP</a>
+  <nav aria-label="Main navigation"><a href="#destinations">Destinations</a><a href="#how-it-works">How it works</a><a class="nav-cta" href="#signup">Get started&nbsp; ↗</a></nav>
+</header>
+<main id="top">
+  <section class="copy" id="why">
+    <div class="eyebrow">Your next chapter starts here</div>
+    <h1>Go beyond<br>the <span>ordinary.</span></h1>
+    <p class="intro">Big-city nights, quiet mountain mornings, and all the unexpected moments in between. Tell us a little about yourself and start planning a trip that feels like yours.</p>
+    <div class="highlights">
+      <div class="highlight"><span class="icon">⌖</span> Trips made for you</div>
+      <div class="highlight"><span class="icon">✧</span> Handpicked experiences</div>
+      <div class="highlight"><span class="icon">♡</span> Your pace, your way</div>
+    </div>
+    <div class="quote">“The journey is yours to make.”<strong>PLAN A TRIP · Find your somewhere</strong></div>
+  </section>
+  <section class="card" id="signup" aria-labelledby="form-title">
+    <div class="card-head"><div><h2 id="form-title">Let’s get you going</h2><p>Set up your traveler profile in a moment.</p></div><span class="step">✦ &nbsp; FREE TO JOIN</span></div>
+    <div class="tabs" role="tablist" aria-label="Account options"><button type="button" class="active" id="signup-tab" aria-selected="true">Create account</button><button type="button" id="login-tab" aria-selected="false">Log in</button></div>
+    <form id="trip-form" novalidate>
+      <div class="fields">
+        <div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" required></div>
+        <div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 000 0000" required></div>
+        <div class="field full"><label for="email">Gmail / email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+        <div class="field full"><label for="address">Address</label><textarea id="address" name="address" autocomplete="street-address" placeholder="Street, city, country" required></textarea></div>
+        <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" minlength="8" required></div>
+        <div class="field"><label for="captcha">Quick check: enter the code</label><div class="captcha-row"><span class="captcha-code" id="captcha-code" aria-label="CAPTCHA code"></span><button class="refresh" type="button" id="refresh-captcha" aria-label="Refresh CAPTCHA">↻</button><input id="captcha" name="captcha" placeholder="Code" autocomplete="off" required></div></div>
+      </div>
+      <button class="submit" id="submit-button" type="submit">Create my travel profile &nbsp;→</button>
+      <div id="notice" class="notice" role="status" aria-live="polite"></div>
+      <p class="privacy">By continuing, you agree to our Terms and Privacy Policy. Your details stay on this device in this demo.</p>
+    </form>
+    <div id="login-screen" hidden>
+      <div class="card-head"><div><h2>Welcome back</h2><p>Your traveler profile is ready. Log in to continue.</p></div><span class="step">✦ &nbsp; STEP 2</span></div>
+      <form id="login-form">
+        <div class="field"><label for="login-email">Email address</label><input id="login-email" type="email" autocomplete="username" required></div>
+        <div class="field" style="margin-top:13px"><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required></div>
+        <button class="submit" type="submit">Log in to PLAN A TRIP &nbsp;→</button>
+        <div id="login-notice" class="notice" role="status" aria-live="polite"></div>
+        <p class="privacy">This demo does not save account details or authenticate users. Connect a secure backend for real accounts.</p>
+      </form>
+    </div>
+    <div id="planner-screen" class="planner" hidden>
+      <div class="card-head"><div><h2>Plan your next trip</h2><p>Tell us where you’re headed and how long you have.</p></div><span class="step">✦ &nbsp; TRIP PLANNER</span></div>
+      <p class="planner-intro">We’ll build a day-by-day starting itinerary with places to explore and time to recharge.</p>
+      <form id="planner-form"><div class="planner-grid">
+        <div class="field"><label for="from-place">Starting from</label><input id="from-place" placeholder="City or airport" required></div>
+        <div class="field"><label for="to-place">Destination</label><input id="to-place" placeholder="Where do you want to go?" required></div>
+        <div class="field"><label for="trip-days">How many days?</label><input id="trip-days" type="number" min="1" max="14" value="3" required></div>
+        <div class="field"><label for="travel-style">Trip style</label><select id="travel-style"><option>Balanced</option><option>Culture &amp; history</option><option>Food &amp; cafes</option><option>Nature &amp; outdoors</option><option>Relaxed pace</option></select></div>
+        <div class="field full"><label for="vehicle">Transport preference</label><select id="vehicle"><option value="all">Show all vehicle choices</option><option value="flight">Flight</option><option value="train">Train</option><option value="bus">Bus</option><option value="car">Car or rental</option></select></div>
+      </div><button class="submit" type="submit">Build my itinerary &nbsp;✦</button></form>
+      <div id="itinerary" class="itinerary" aria-live="polite"></div>
+      <p class="plan-note">This standalone demo creates sample suggestions. For live AI recommendations, connect a secure server endpoint; never put an AI API key in browser code.</p>
+    </div>
+  </section>
+</main>
+<section class="content-section" id="destinations">
+  <div class="section-kicker">Find your somewhere</div>
+  <h2 class="section-title">A little inspiration for the road.</h2>
+  <p class="section-copy">From first-time favorites to new corners of the world, start with a place that sparks your curiosity. Then shape the trip around your own pace.</p>
+  <div class="destination-grid">
+    <article class="destination-card"><h3>Tokyo, Japan</h3><p>Neon nights, quiet shrines, and a city full of contrasts.</p><a href="#signup">Plan a Tokyo trip →</a></article>
+    <article class="destination-card"><h3>Paris, France</h3><p>Museums, café terraces, riverside walks, and timeless streets.</p><a href="#signup">Plan a Paris trip →</a></article>
+    <article class="destination-card"><h3>Kyoto, Japan</h3><p>Temple paths, traditional lanes, gardens, and mountain air.</p><a href="#signup">Plan a Kyoto trip →</a></article>
+  </div>
+</section>
+<section class="content-section" id="how-it-works">
+  <div class="section-kicker">Your trip, your way</div>
+  <h2 class="section-title">From idea to itinerary in three steps.</h2>
+  <div class="steps-grid">
+    <article class="step-card"><span class="step-number">01 · Tell us where</span><h3>Choose your route</h3><p>Enter where you’re starting, where you want to go, and how many days you have.</p></article>
+    <article class="step-card"><span class="step-number">02 · Set your pace</span><h3>Pick a travel style</h3><p>Make room for culture, food, the outdoors, or an easygoing mix of everything.</p></article>
+    <article class="step-card"><span class="step-number">03 · Make it yours</span><h3>Explore your plan</h3><p>Get a day-by-day starting itinerary, then adjust it to fit your interests.</p></article>
+  </div>
+</section>
+<section class="bottom-cta"><div><h2>Your next great story is out there.</h2><p>Start planning a trip that feels like you.</p></div><a href="#signup">Start planning&nbsp; ↗</a></section>
+<footer><span>© 2025 PLAN A TRIP</span><span>Make room for the unexpected ✦</span></footer>
+<script>
+  const form=document.getElementById('trip-form'), codeBox=document.getElementById('captcha-code'), notice=document.getElementById('notice');
+  const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let code='';
+  function newCode(){code=Array.from({length:5},()=>alphabet[Math.floor(Math.random()*alphabet.length)]).join('');codeBox.textContent=code;document.getElementById('captcha').value='';}
+  newCode(); document.getElementById('refresh-captcha').addEventListener('click',newCode);
+  const signup=document.getElementById('signup-tab'), login=document.getElementById('login-tab'); let mode='signup';
+  function setMode(next){mode=next;signup.classList.toggle('active',mode==='signup');login.classList.toggle('active',mode==='login');signup.setAttribute('aria-selected',mode==='signup');login.setAttribute('aria-selected',mode==='login');document.getElementById('form-title').textContent=mode==='signup'?'Let’s get you going':'Welcome back';document.querySelector('.card-head p').textContent=mode==='signup'?'Set up your traveler profile in a moment.':'Log in to continue planning your next trip.';document.getElementById('submit-button').innerHTML=mode==='signup'?'Create my travel profile &nbsp;→':'Log in &nbsp;→';document.getElementById('password').autocomplete=mode==='signup'?'new-password':'current-password';notice.className='notice';}
+  signup.addEventListener('click',()=>setMode('signup'));login.addEventListener('click',()=>{form.hidden=true;document.querySelector('.tabs').hidden=true;document.querySelector('.card-head').hidden=true;document.getElementById('login-screen').hidden=false;});
+  form.addEventListener('submit',e=>{e.preventDefault();notice.className='notice';if(mode!=='signup'){notice.textContent='Please create your traveler profile first.';notice.classList.add('show','err');return;}if(!form.reportValidity())return;if(document.getElementById('captcha').value.trim().toUpperCase()!==code){notice.textContent='That code didn’t match. Please try the new code.';notice.classList.add('show','err');newCode();return;}document.getElementById('login-email').value=document.getElementById('email').value;form.hidden=true;document.querySelector('.tabs').hidden=true;document.querySelector('.card-head').hidden=true;document.getElementById('login-screen').hidden=false;});
+  document.getElementById('login-form').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;document.getElementById('login-screen').hidden=true;document.getElementById('planner-screen').hidden=false;});
+  const attractionGuides={tokyo:['Asakusa and Sensō-ji Temple','Ueno Park and Tokyo National Museum','Shibuya Crossing and Meiji Shrine','Tsukiji Outer Market and Ginza','teamLab digital art and Odaiba'],kyoto:['Fushimi Inari Shrine','Kiyomizu-dera and historic Higashiyama','Arashiyama Bamboo Grove','Nishiki Market','Kinkaku-ji (Golden Pavilion)'],paris:['Eiffel Tower and Seine riverside','Louvre Museum and Tuileries Garden','Montmartre and Sacré-Cœur','Musée d’Orsay and Saint-Germain','Île de la Cité'],london:['Westminster and the South Bank','British Museum and Covent Garden','Tower of London and Tower Bridge','Hyde Park','Camden Market'],mumbai:['Gateway of India and Colaba','Chhatrapati Shivaji Maharaj Vastu Sangrahalaya','Marine Drive and Girgaon Chowpatty','Bandra Fort','Sanjay Gandhi National Park'],bengaluru:['Cubbon Park and Vidhana Soudha','Bengaluru Palace','Lalbagh Botanical Garden','Church Street','Nandi Hills day trip']};
+  let latestPlanRequest=0;
+  document.getElementById('planner-form').addEventListener('submit',e=>{
+    e.preventDefault();if(!e.currentTarget.reportValidity())return;
+    const from=document.getElementById('from-place').value.trim(),to=document.getElementById('to-place').value.trim(),days=Number(document.getElementById('trip-days').value),style=document.getElementById('travel-style').value,out=document.getElementById('itinerary');
+    const key=Object.keys(attractionGuides).find(k=>to.toLowerCase().includes(k));
+    const places=attractionGuides[key]||[`Explore ${to}’s popular downtown sights`,`Visit a local museum or cultural district`,`Discover a neighborhood market and local food`,`Spend time at a park, viewpoint, or waterfront`,`Choose a nearby day trip or local experience`];
+    const sample=Array.from({length:days},(_,i)=>({title:`Day ${i+1}`,items:[places[(i*2)%places.length],places[(i*2+1)%places.length],style==='Relaxed pace'?'Leave the evening open to recharge':'Finish with dinner and an evening stroll']}));
+    const requestId=++latestPlanRequest;
+    renderPlan(out,from,to,days,style,sample,false,'Sample plan shown instantly. AI suggestions may take a few seconds…');
+    // Show the local itinerary immediately; update it only if the AI returns successfully.
+    fetch('/api/plan-trip',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from,to,days,style})})
+      .then(response=>response.ok?response.json():null)
+      .then(data=>{if(requestId!==latestPlanRequest||!Array.isArray(data?.days)||!data.days.length)return;const aiDays=data.days.map((day,i)=>({title:day.title||`Day ${i+1}`,items:Array.isArray(day.places)?day.places:[]}));renderPlan(out,from,to,days,style,aiDays,true,'AI itinerary generated for your route.');})
+      .catch(()=>{});
+  });
+  const venueGuides=[
+    {match:'Tokyo Tower',guide:'https://en.tokyotower.co.jp/',tickets:'https://ticket.tokyotower.co.jp/en/',note:'Check official ticket options and date availability.'},
+    {match:'Sensō-ji',guide:'https://www.senso-ji.jp/english/',tickets:'',note:'Check the official visitor page for access information.'},
+    {match:'Meiji Shrine',guide:'https://www.meijijingu.or.jp/en/',tickets:'',note:'Check the official site for visitor guidance and events.'},
+    {match:'Fushimi Inari',guide:'https://inari.jp/en/',tickets:'',note:'Check the official shrine page for visitor information.'},
+    {match:'Kiyomizu-dera',guide:'https://www.kiyomizudera.or.jp/en/',tickets:'https://www.kiyomizudera.or.jp/en/',note:'Check current admission and special opening details.'},
+    {match:'Arashiyama Bamboo Grove',guide:'https://kyoto.travel/en/',tickets:'',note:'Public walking area; confirm local visitor guidance.'},
+    {match:'Eiffel Tower',guide:'https://www.toureiffel.paris/en/planning-smooth-visit',tickets:'https://ticket.toureiffel.paris/en',note:'Timed tickets are offered online; check official availability.'},
+    {match:'Louvre',guide:'https://www.louvre.fr/en/visit',tickets:'https://ticket.louvre.fr/',note:'Check official ticket availability and entry requirements.'},
+    {match:'Sacré-Cœur',guide:'https://www.sacre-coeur-montmartre.com/english/',tickets:'',note:'Check the official site for visitor and tour information.'},
+    {match:'Musée d’Orsay',guide:'https://www.musee-orsay.fr/en/visit',tickets:'https://www.musee-orsay.fr/en/visit',note:'Check official ticket and exhibition information.'},
+    {match:'Tower of London',guide:'https://www.hrp.org.uk/tower-of-london/visit/',tickets:'https://www.hrp.org.uk/tower-of-london/visit/tickets-and-prices/',note:'Check official ticket options and date availability.'},
+    {match:'British Museum',guide:'https://www.britishmuseum.org/visit',tickets:'https://www.britishmuseum.org/visit',note:'Check timed entry and special exhibition tickets.'},
+    {match:'Westminster',guide:'https://www.westminster-abbey.org/visit-us',tickets:'https://www.westminster-abbey.org/visit-us/entry-tickets',note:'Check opening arrangements and official entry tickets.'},
+    {match:'Hyde Park',guide:'https://www.royalparks.org.uk/visit/parks/hyde-park',tickets:'',note:'Public park; check for event or access notices.'},
+    {match:'Camden Market',guide:'https://camdenmarket.com/visit-us',tickets:'',note:'Market visits are generally walk-in; book tours separately.'},
+    {match:'Sanjay Gandhi National Park',guide:'https://sgnp.maharashtra.gov.in/',tickets:'https://sgnp.maharashtra.gov.in/',note:'Check park entry and activity requirements on the official site.'}
+  ];
+  function searchLink(query){return 'https://www.google.com/search?q='+encodeURIComponent(query);}
+  function placeGuideCard(item,to){const venue=venueGuides.find(v=>item.toLowerCase().includes(v.match.toLowerCase()));const guide=venue?.guide||searchLink(item+' '+to+' official visitor guide contact');const ticket=venue?.tickets||searchLink(item+' '+to+' official tickets booking');const note=venue?.note||'Check the venue’s official site to confirm contact details and whether booking is needed.';const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(item+' '+to);return `<div class="guide-card"><h4>${escapeHtml(item)}</h4><p>${escapeHtml(note)}</p><div class="guide-links"><a href="${guide}" target="_blank" rel="noopener">Visitor guide / contact ↗</a><a href="${ticket}" target="_blank" rel="noopener">Check tickets ↗</a><a href="${map}" target="_blank" rel="noopener">Map ↗</a></div></div>`;}
+  function transportCards(from,to){const selected=document.getElementById('vehicle').value;const all=[['flight','✈','Flight','Consider for longer-distance routes. Check airport transfers and baggage.'],['train','🚆','Train','Check intercity rail availability and station locations.'],['bus','🚌','Bus','Compare coach routes, stops, and travel times.'],['car','🚗','Car or rental','Flexible for road trips; check local driving rules and parking.']].filter(x=>selected==='all'||x[0]===selected);return `<h3 style="margin:20px 0 8px">Transport choices</h3><p class="planner-intro">${daysLabel()} · Compare routes for ${escapeHtml(from)} to ${escapeHtml(to)}.</p><div class="transport-grid">${all.map(([mode,icon,name,desc])=>`<div class="transport-card"><span class="transport-icon">${icon}</span><h4>${name}</h4><p>${desc}</p><div class="guide-links"><a href="${searchLink(name+' from '+from+' to '+to+' booking')}" target="_blank" rel="noopener">Search options ↗</a><a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=${mode==='car'?'driving':'transit'}" target="_blank" rel="noopener">View route ↗</a></div></div>`).join('')}</div><h3 style="margin:18px 0 8px">Getting around there</h3><div class="transport-grid"><div class="transport-card"><span class="transport-icon">🚇</span><h4>Public transit</h4><p>Look for local metro, bus, or rail passes.</p><a href="${searchLink('public transport in '+to)}" target="_blank" rel="noopener">Find local options ↗</a></div><div class="transport-card"><span class="transport-icon">🚕</span><h4>Taxi or rideshare</h4><p>Check licensed local providers and pickup rules.</p><a href="${searchLink('taxi rideshare in '+to)}" target="_blank" rel="noopener">Find local options ↗</a></div></div>`;}
+  let activeTripDays=0;function daysLabel(){return `${activeTripDays} day${activeTripDays===1?'':'s'} for your trip`;}
+  function renderPlan(out,from,to,days,style,agenda,isAI,status){activeTripDays=days;out.innerHTML=`<h2 style="font-size:19px;margin:0 0 4px">${days}-day trip: ${escapeHtml(from)} → ${escapeHtml(to)}</h2><p class="planner-intro">${escapeHtml(status)} · ${isAI?'AI-suggested':'Sample'} · ${escapeHtml(style)} pace</p>`+transportCards(from,to)+agenda.map(day=>`<article class="day-plan"><h3>${escapeHtml(day.title)}</h3><ul>${day.items.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul><div class="guide-grid">${day.items.map(item=>placeGuideCard(item,to)).join('')}</div></article>`).join('')+'<p class="plan-note">Booking links open venue pages or search results. Confirm ticket requirements, contact details, and availability with the venue. This demo does not make reservations.</p>';}
+  function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script>
+</body>
+</html>
